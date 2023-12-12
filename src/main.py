@@ -11,17 +11,21 @@ with open(filepath, "r") as f:
 data = data[::-1]
 data = data[:50]  # debug
 
+chunksize = 20
+data = [data[x : x + chunksize] for x in range(0, len(data), chunksize)]
+
 # main
-book = xml2epub.Epub("My New E-book Name")
+for index, chunk in enumerate(data):
+    book = xml2epub.Epub(f"chunk {index}")
 
-for article in data:
-    title = article["title"]
-    content = article["content"]
+    for article in chunk:
+        title = article["title"]
+        content = f"<h1>{title}</h1>" + article["content"]
 
-    print(f"Adding {title}...")
-    book.add_chapter(
-        xml2epub.create_chapter_from_string(html_string=content, title=title)
-    )
+        print(f"Adding {title}...")
+        book.add_chapter(
+            xml2epub.create_chapter_from_string(html_string=content, title=title)
+        )
 
-## generate epub file
-book.create_epub("output")
+    ## generate epub file
+    book.create_epub("output")
