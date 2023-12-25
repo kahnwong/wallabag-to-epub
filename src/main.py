@@ -9,7 +9,7 @@ with open(filepath, "r") as f:
 
 # sort from oldest to newest
 data = data[::-1]
-data = data[:50]  # debug
+data = data[:140]  # debug
 
 chunksize = 20
 data = [data[x : x + chunksize] for x in range(0, len(data), chunksize)]
@@ -23,9 +23,13 @@ for index, chunk in enumerate(data):
         content = f"<h1>{title}</h1>" + article["content"]
 
         print(f"Adding {title}...")
-        book.add_chapter(
-            xml2epub.create_chapter_from_string(html_string=content, title=title)
-        )
+
+        try:
+            book.add_chapter(
+                xml2epub.create_chapter_from_string(html_string=content, title=title)
+            )
+        except ValueError:
+            pass
 
     ## generate epub file
     book.create_epub("output")
