@@ -1,16 +1,47 @@
-import json
+import os
 from typing import Any
+from typing import Dict
+from typing import List
 
+import requests
 import xml2epub
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-def parse_data(filename: str) -> Any:
-    with open(filename, "r") as f:
-        data = json.load(f)
+def get_access_token():
+    url = "https://wallabag.karnwong.me/oauth/v2/token"
+    data = {
+        "grant_type": "password",
+        "client_id": os.getenv("WALLABAG_CLIENT_ID"),
+        "client_secret": os.getenv("WALLABAG_CLIENT_SECRET"),
+        "username": os.getenv("WALLABAG_USERNAME"),
+        "password": os.getenv("WALLABAG_PASSWORD"),
+    }
 
+    r = requests.post(url, data=data)
+
+    return r.json()["access_token"]
+
+
+def get_articles(access_token: str) -> List[Dict[str, Any]]:
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",  # Adjust content type if needed
+    }
+
+    url = "https://wallabag.karnwong.me/api/entries?perPage=160&starred=0&archived=0"
+
+    r = requests.get(url=url, headers=headers)
+
+    return r.json()["_embedded"]["items"]
+
+
+def parse_data(data: List[Dict[str, Any]]) -> Any:
     # sort from oldest to newest
     data = data[::-1]
-    data = data[:140]  # debug
+    # data = data[:140]  # debug
 
     chunksize = 20
     data = [data[x : x + chunksize] for x in range(0, len(data), chunksize)]
@@ -42,5 +73,8 @@ def create_epub(data: Any):
 
 
 if __name__ == "__main__":
-    data = parse_data("/Users/kahnwong/Downloads/Unread articles.json")
+    access_token = get_access_token()
+    articles = get_articles(access_token)
+
+    data = parse_data(articles)
     create_epub(data)
