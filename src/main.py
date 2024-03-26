@@ -3,8 +3,8 @@ from typing import Any
 from typing import Dict
 from typing import List
 
-import pypub
 import requests
+import xml2epub
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -31,7 +31,7 @@ def get_articles(access_token: str) -> List[Dict[str, Any]]:
         "Content-Type": "application/json",  # Adjust content type if needed
     }
 
-    url = "https://wallabag.karnwong.me/api/entries?perPage=20&starred=0&archived=0"
+    url = "https://wallabag.karnwong.me/api/entries?perPage=160&starred=0&archived=0"
 
     r = requests.get(url=url, headers=headers)
 
@@ -51,8 +51,7 @@ def parse_data(data: List[Dict[str, Any]]) -> Any:
 
 def create_epub(data: Any):
     for index, chunk in enumerate(data):
-        filename = f"chunk {index}"
-        book = pypub.Epub(filename)
+        book = xml2epub.Epub(f"chunk {index}")
 
         for article in chunk:
             title = article["title"]
@@ -61,12 +60,16 @@ def create_epub(data: Any):
             print(f"Adding {title}...")
 
             try:
-                book.add_chapter(pypub.create_chapter_from_html(content.encode()))
+                book.add_chapter(
+                    xml2epub.create_chapter_from_string(
+                        html_string=content, title=title
+                    )
+                )
             except ValueError:
                 pass
 
         ## generate epub file
-        book.create(f"output/{filename}.epub")
+        book.create_epub("output")
 
 
 if __name__ == "__main__":
