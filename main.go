@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+
 	"github.com/Strubbl/wallabago/v9"
 	"github.com/go-shiori/go-epub"
 	_ "github.com/joho/godotenv/autoload"
-	"log"
-	"os"
 )
 
-func getEntries() []wallabago.Item {
-	// get newest 5 articles
+func getEntries(length int) []wallabago.Item {
 	entries, err := wallabago.GetEntries(
 		wallabago.APICall,
-		0, 0, "", "", 1, 5, "", 0, -1, "", "")
+		0, 0, "", "", 1, length, "", 0, -1, "", "")
 	if err != nil {
 		log.Println("Cannot obtain articles from Wallabag")
 	}
@@ -30,11 +31,16 @@ func init() {
 		UserPassword: os.Getenv("WALLABAG_PASSWORD"),
 	}
 	wallabago.SetConfig(wallabagConfig)
+
+	// create data dir
+	wd, _ := os.Getwd()
+	_ = os.MkdirAll(filepath.Join(wd, "output"), os.ModePerm)
 }
 
 func main() {
 	// get entries
-	entries := getEntries()
+	entries := getEntries(2) // debug
+	fmt.Println(len(entries))
 
 	// Create a new EPUB
 	e, err := epub.NewEpub("My title")
@@ -60,9 +66,10 @@ func main() {
 	fmt.Println("Embedding images...")
 	e.EmbedImages() // this has to stay here
 
-	err = e.Write("My EPUB.epub")
+	err = e.Write("output/My EPUB.epub")
 	if err != nil {
 		fmt.Println("Error creating EPUB")
+	} else {
+		fmt.Println("Successfully created EPUB")
 	}
-	fmt.Println("Successfully created EPUB")
 }
