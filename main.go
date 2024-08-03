@@ -86,7 +86,10 @@ func main() {
 			fmt.Printf("Adding: %s\n", entry.Title)
 
 			// Add section
-			_, err = e.AddSection(entry.Content, entry.Title, "", "")
+			title := entry.Title
+			content := fmt.Sprintf("<h1>%s</h1>%s", title, entry.Content)
+
+			_, err = e.AddSection(content, entry.Title, "", "")
 			if err != nil {
 				log.Println("Error adding article", err)
 			}
