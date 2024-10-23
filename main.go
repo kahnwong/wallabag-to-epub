@@ -11,10 +11,10 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func getEntries(length int) []wallabago.Item {
+func getEntries(length int, domainName string) []wallabago.Item {
 	entries, err := wallabago.GetEntries(
 		wallabago.APICall,
-		0, 0, "", "", 1, length, "", 0, -1, "", "")
+		0, 0, "", "", 1, length, "", 0, -1, "", domainName)
 	if err != nil {
 		log.Println("Cannot obtain articles from Wallabag")
 	}
@@ -63,7 +63,7 @@ func main() {
 	var outputFileIndex int
 
 	// get entries
-	entries := getEntries(200)
+	entries := getEntries(200, "")
 
 	// create EPUBs
 	chunks := Chunk(entries, 20)
