@@ -2,7 +2,7 @@ module github.com/kahnwong/wallabag-to-epub
 
 go 1.23
 
-toolchain go1.23.6
+toolchain go1.24.0
 
 require (
 	github.com/Strubbl/wallabago/v9 v9.0.8
