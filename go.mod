@@ -5,7 +5,7 @@ go 1.24
 toolchain go1.24.0
 
 require (
-	github.com/Strubbl/wallabago/v9 v9.0.9
+	github.com/Strubbl/wallabago/v9 v9.0.10
 	github.com/go-shiori/go-epub v1.2.1
 	github.com/joho/godotenv v1.5.1
 )
@@ -15,5 +15,5 @@ require (
 	github.com/gofrs/uuid/v5 v5.0.0 // indirect
 	github.com/vincent-petithory/dataurl v1.0.0 // indirect
 	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 )
