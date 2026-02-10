@@ -10,6 +10,8 @@ github.com/Strubbl/wallabago/v9 v9.0.17 h1:eB5JUurY9JwicoiDS4cl4iyUCqS8gysGaIlA3
 github.com/Strubbl/wallabago/v9 v9.0.17/go.mod h1:/OURRO4hEXz+XgQJfJeSz569KUKijRfdZdXVZEdUCO4=
 github.com/Strubbl/wallabago/v9 v9.0.19 h1:BBo/g4amr1oSi3nhQLG6drvnVJkEm9bR5lRFBSNNqsY=
 github.com/Strubbl/wallabago/v9 v9.0.19/go.mod h1:jLbUAe21UPf8gCWwMMlkJBGRDjVdX5kaEat+dXs1Ljo=
+github.com/Strubbl/wallabago/v9 v9.0.21 h1:sQ1b1satrz/WOYMki0l8wgwyX1AedF+WC2D/T/KF3aQ=
+github.com/Strubbl/wallabago/v9 v9.0.21/go.mod h1:yLRCJdZ3aEiLLfL7azHtTuczMG26gA4AVDMVRhMZejo=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/go-shiori/go-epub v1.2.1 h1:+K/WxrvmfFQY69cpryiObrT6X7WhkwpqhHY65AHs2Rg=
@@ -34,3 +36,5 @@ golang.org/x/text v0.30.0 h1:yznKA/E9zq54KzlzBEAWn1NXSQ8DIp/NYMy88xJjl4k=
 golang.org/x/text v0.30.0/go.mod h1:yDdHFIX9t+tORqspjENWgzaCVXgk0yYnYuSZ8UzzBVM=
 golang.org/x/text v0.32.0 h1:ZD01bjUt1FQ9WJ0ClOL5vxgxOI/sVCNgX1YtKwcY0mU=
 golang.org/x/text v0.32.0/go.mod h1:o/rUWzghvpD5TXrTIBuJU77MTaN0ljMWE47kxGJQ7jY=
+golang.org/x/text v0.34.0 h1:oL/Qq0Kdaqxa1KbNeMKwQq0reLCCaFtqu2eNuSeNHbk=
+golang.org/x/text v0.34.0/go.mod h1:homfLqTYRFyVYemLBFl5GgL/DWEiH5wcsQ5gSh1yziA=
