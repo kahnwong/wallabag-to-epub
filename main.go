@@ -97,7 +97,7 @@ func main() {
 
 		// write epub
 		fmt.Println("Embedding images...")
-		e.EmbedImages() // this has to stay here
+		// e.EmbedImages() // this has to stay here
 
 		err = e.Write(fmt.Sprintf("output/%s", filename))
 		if err != nil {
