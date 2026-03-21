@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/Strubbl/wallabago/v9"
 	"github.com/go-shiori/go-epub"
@@ -83,15 +84,19 @@ func main() {
 
 		// Add articles
 		for _, entry := range chunk {
-			fmt.Printf("Adding: %s\n", entry.Title)
+			language := detectLanguage(entry.Title)
+			if language == "English" {
 
-			// Add section
-			title := entry.Title
-			content := fmt.Sprintf("<h1>%s</h1>%s", title, entry.Content)
+				fmt.Printf("Adding: %s\n", entry.Title)
 
-			_, err = e.AddSection(content, entry.Title, "", "")
-			if err != nil {
-				log.Println("Error adding article", err)
+				// Add section
+				title := entry.Title
+				content := fmt.Sprintf("<h1>%s</h1>%s", title, entry.Content)
+
+				_, err = e.AddSection(content, entry.Title, "", "")
+				if err != nil {
+					log.Println("Error adding article", err)
+				}
 			}
 		}
 
@@ -108,4 +113,15 @@ func main() {
 
 		outputFileIndex++
 	}
+}
+
+func detectLanguage(content string) string {
+	var language string
+	if !strings.Contains(content, "ก") {
+		language = "English"
+	} else {
+		language = "Thai"
+	}
+
+	return language
 }
