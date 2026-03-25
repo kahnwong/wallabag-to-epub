@@ -67,7 +67,7 @@ func main() {
 	entries := getEntries(200, "")
 
 	// create EPUBs
-	chunks := Chunk(entries, 20)
+	chunks := Chunk(entries, 100) // 20 if embed images
 
 	for chunk := range chunks {
 		filename := fmt.Sprintf("Wallabag %v.epub", outputFileIndex)
