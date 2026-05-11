@@ -6,11 +6,15 @@
   ],
   "packageRules": [
     {
+      "matchManagers": ["gomod", "dockerfile"],
       "matchPackageNames": [
         "go",
-        "golang"
+        "golang",
+        "docker.io/library/golang"
       ],
-      "groupName": "go-version"
+      "groupName": "go version",
+      "separateMinorPatch": true,
+      "rangeStrategy": "bump"
     }
   ]
 }
