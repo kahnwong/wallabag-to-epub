@@ -84,25 +84,22 @@ func main() {
 
 		// Add articles
 		for _, entry := range chunk {
-			language := detectLanguage(entry.Title)
-			if language == "English" {
 
-				fmt.Printf("Adding: %s\n", entry.Title)
+			fmt.Printf("Adding: %s\n", entry.Title)
 
-				// Add section
-				title := entry.Title
-				content := fmt.Sprintf("<h1>%s</h1>%s", title, entry.Content)
+			// Add section
+			title := entry.Title
+			content := fmt.Sprintf("<h1>%s</h1>%s", title, entry.Content)
 
-				_, err = e.AddSection(content, entry.Title, "", "")
-				if err != nil {
-					log.Println("Error adding article", err)
-				}
+			_, err = e.AddSection(content, entry.Title, "", "")
+			if err != nil {
+				log.Println("Error adding article", err)
 			}
 		}
 
 		// write epub
 		fmt.Println("Embedding images...")
-		// e.EmbedImages() // this has to stay here
+		e.EmbedImages() // this has to stay here
 
 		err = e.Write(fmt.Sprintf("output/%s", filename))
 		if err != nil {
