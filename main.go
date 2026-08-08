@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -62,9 +63,15 @@ func init() {
 
 func main() {
 	var outputFileIndex int
+	englishOnly := flag.Bool("english-only", false, "only include English articles")
+	embedImages := flag.Bool("embed-images", false, "embed images in the EPUB")
+	flag.Parse()
 
 	// get entries
 	entries := getEntries(200, "")
+	if *englishOnly {
+		entries = filterEnglishEntries(entries)
+	}
 
 	// create EPUBs
 	chunks := Chunk(entries, 100) // 20 if embed images
@@ -98,8 +105,10 @@ func main() {
 		}
 
 		// write epub
-		fmt.Println("Embedding images...")
-		e.EmbedImages() // this has to stay here
+		if *embedImages {
+			fmt.Println("Embedding images...")
+			e.EmbedImages() // this has to stay here
+		}
 
 		err = e.Write(fmt.Sprintf("output/%s", filename))
 		if err != nil {
@@ -110,6 +119,18 @@ func main() {
 
 		outputFileIndex++
 	}
+}
+
+func filterEnglishEntries(entries []wallabago.Item) []wallabago.Item {
+	filteredEntries := make([]wallabago.Item, 0, len(entries))
+
+	for _, entry := range entries {
+		if detectLanguage(entry.Title) == "English" {
+			filteredEntries = append(filteredEntries, entry)
+		}
+	}
+
+	return filteredEntries
 }
 
 func detectLanguage(content string) string {
