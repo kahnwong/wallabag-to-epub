@@ -1,6 +1,6 @@
 module github.com/kahnwong/wallabag-to-epub
 
-go 1.27.0
+go 1.27.1
 
 require (
 	github.com/Strubbl/wallabago/v9 v9.0.27
